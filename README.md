@@ -1,0 +1,1 @@
+Spring Admin Server with status update trigger to remove instances with offline and unknown statuses
