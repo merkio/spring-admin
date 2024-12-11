@@ -44,8 +44,7 @@ jobs:
         push: true
         tags: |
           ishaman/spring-admin:latest
-    - name: Create realese
-      uses: ncipollo/release-action@v1
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        skipIfReleaseExists: true
+    - name: Create release draft
+      uses: release-drafter/release-drafter@v6
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
