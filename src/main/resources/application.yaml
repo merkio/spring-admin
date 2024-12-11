@@ -8,7 +8,6 @@ spring:
   thymeleaf:
     check-template-location: false
 
-
 management:
   endpoints:
     web:

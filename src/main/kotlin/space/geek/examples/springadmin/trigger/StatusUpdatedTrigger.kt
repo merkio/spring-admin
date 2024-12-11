@@ -14,6 +14,7 @@ import org.reactivestreams.Publisher
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import java.time.Duration
+import java.time.temporal.ChronoUnit
 
 class StatusUpdatedTrigger(
     private val instanceRegistry: InstanceRegistry,
@@ -26,7 +27,13 @@ class StatusUpdatedTrigger(
 
     init {
         log.info("Register new status update trigger")
-        intervalCheck = IntervalCheck("status") { instance -> this.updateStatus(instance) }
+        intervalCheck = IntervalCheck(
+            /* name = */ "status",
+            /* checkFn = */ { instance -> this.updateStatus(instance) },
+            /* interval */ Duration.of(2, ChronoUnit.MINUTES),
+            /* minRetention */ Duration.of(1, ChronoUnit.MINUTES),
+            /* maxBackoff */ Duration.of(3, ChronoUnit.MINUTES)
+        )
     }
 
     override fun handle(publisher: Flux<InstanceEvent>): Publisher<Void> {
@@ -58,7 +65,7 @@ class StatusUpdatedTrigger(
     }
 
     fun setInterval(updateInterval: Duration) {
-        intervalCheck.setInterval(updateInterval)
+        intervalCheck.interval = updateInterval
     }
 
     fun setLifetime(statusLifetime: Duration) {
