@@ -5,7 +5,7 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 # Copy the Spring Boot jar file to the container
-COPY target/spring-admin.jar /app/application.jar
+COPY target/spring-admin-0.0.1-SNAPSHOT.jar /app/application.jar
 
 # Expose the port the application will run on
 EXPOSE 9090
